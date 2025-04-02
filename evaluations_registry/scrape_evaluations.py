@@ -137,3 +137,23 @@ df_details["Other departments"] = df_details["Other departments"].str.replace(
     "Closed organisation: ", "", regex=False
 )
 
+# %%
+# Convert "Evaluation types" to separate Impact evaluation, Process evaluation, Value for
+# money evaluation, Other columns
+df_details["Evaluation types"] = df_details["Evaluation types"].str.replace(
+    "\n                \n                  ", ", ", regex=False
+)
+
+pos = df_details.columns.get_loc("Evaluation types")
+
+i = 1
+
+for evaluation_type in [
+    'Impact evaluation',
+    'Process evaluation',
+    'Value for money evaluation',
+    'Other',
+]:
+    df_details.insert(pos + i, evaluation_type, None)
+    df_details[evaluation_type] = df_details["Evaluation types"].str.contains(evaluation_type)
+    i += 1
