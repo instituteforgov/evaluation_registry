@@ -4,7 +4,7 @@
 
 """
     Purpose
-        Scrape evaluations from the Evaluations Registry
+        Scrape evaluations from the Evaluation Registry
     Inputs
         - html: https://evaluation-registry.cabinetoffice.gov.uk/search/?search_term=
     Outputs
@@ -13,7 +13,9 @@
         - pkl: evaluationdetails_20250402.pkl
             - Details of evaluations
     Notes
-        None
+        - Using the Evaluation Registry search function without a search term results
+        in duplicate evaluations being returned - these are weededed out below
+# we use the search function
 """
 
 import datetime
@@ -128,6 +130,14 @@ display(df_details)
 df_details.to_pickle("evaluationdetails_20250402.pkl")
 
 # %%
+# Drop duplicates
+# NB: These seem genuine duplicates that have come in from the way in which
+# we use the search function
+df_details = df_details.loc[
+    ~df_details.duplicated()
+]
+
+# %%
 # EDIT DATA
 # Remove "Closed organisation: " from specified columns
 df_details["Lead department"] = df_details["Lead department"].str.replace(
@@ -157,3 +167,5 @@ for evaluation_type in [
     df_details.insert(pos + i, evaluation_type, None)
     df_details[evaluation_type] = df_details["Evaluation types"].str.contains(evaluation_type)
     i += 1
+
+# %%
