@@ -126,3 +126,14 @@ display(df_details)
 # %%
 # SAVE TO PICKLE
 df_details.to_pickle("evaluationdetails_20250402.pkl")
+
+# %%
+# EDIT DATA
+# Remove "Closed organisation: " from specified columns
+df_details["Lead department"] = df_details["Lead department"].str.replace(
+    "Closed organisation: ", "", regex=False
+)
+df_details["Other departments"] = df_details["Other departments"].str.replace(
+    "Closed organisation: ", "", regex=False
+)
+
