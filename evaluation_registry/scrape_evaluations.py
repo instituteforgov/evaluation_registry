@@ -137,10 +137,6 @@ display(df_details)
 df_details.to_pickle("evaluationdetails_20250414.pkl")
 
 # %%
-# READ FROM PICKLE
-df_details = pd.read_pickle("evaluationdetails_20250414.pkl")
-
-# %%
 # Drop "Page not found" rows
 df_details = df_details.loc[
     df_details["title"] != "Page not found"
