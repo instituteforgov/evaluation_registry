@@ -84,7 +84,7 @@ pd.DataFrame(urlList).to_pickle("urls_20250402.pkl")
 # %%
 def get_details(
     partial: str
-) -> None:
+) -> dict[str, str]:
     """Grab evaluation details"""
 
     url = "https://evaluation-registry.cabinetoffice.gov.uk" + str(partial)
