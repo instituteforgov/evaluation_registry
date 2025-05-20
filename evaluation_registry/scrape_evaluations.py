@@ -7,9 +7,9 @@
     Inputs
         - html: https://evaluation-registry.cabinetoffice.gov.uk/search/?search_term=
     Outputs
-        - pkl: url_20250402.pkl
+        - pkl: url_20250414.pkl
             - URLs for individual evaluations
-        - pkl: evaluationdetails_20250402.pkl
+        - pkl: evaluationdetails_20250414.pkl
             - Details of evaluations
     Notes
         - Using the Evaluation Registry search function without a search term results
@@ -78,7 +78,7 @@ print(datetime.datetime.now())
 
 # Save URLs to pickle
 urlList = list(set(urlList))
-pd.DataFrame(urlList).to_pickle("urls_20250402.pkl")
+pd.DataFrame(urlList).to_pickle("urls_20250414.pkl")
 
 
 # %%
