@@ -13,10 +13,9 @@
             - Details of evaluations
     Notes
         - Using the Evaluation Registry search function without a search term results
-        in duplicate evaluations being returned - these are weededed out below
+        in duplicate evaluations being returned - these are weeded out below
         - Where an event features multiple times - e.g. "Publication of final results" -
         we keep the latest date
-# we use the search function
 """
 
 # flake8: noqa
