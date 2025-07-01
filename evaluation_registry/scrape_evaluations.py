@@ -200,22 +200,26 @@ for evaluation_type in expected_evaluation_types:
     i += 1
 
 # %%
-df_details.loc[
-    df_details["Event Name"].notna()
-]["Event Name"].str.split(", ", expand=False).explode().unique()
+sorted(
+    df_details.loc[
+        df_details["Event Name"].notna()
+    ]["Event Name"].str.split(", ", expand=False).explode().unique()
+)
 
 # %%
 # Check "Event name" values are as expected
 expected_event_names = [
-    "Intervention start date",
-    "Intervention end date",
-    "Evaluation start",
     "Evaluation end",
+    "Evaluation start",
     "Final data analysis end",
-    "Publication of interim results",
-    "Publication of final results",
+    "Interim data analysis start",
+    "Intervention end date",
+    "Intervention start date",
+    "Last participant recruited",
     "Not Set",
     "Other",
+    "Publication of interim results",
+    "Publication of final results",
 ]
 
 assert set(
