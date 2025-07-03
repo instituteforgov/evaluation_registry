@@ -7,9 +7,9 @@
     Inputs
         - html: https://evaluation-registry.cabinetoffice.gov.uk/search/?search_term=
     Outputs
-        - pkl: url_20250701.pkl
+        - pkl: url_20250703.pkl
             - URLs for individual evaluations
-        - pkl: evaluationdetails_20250701.pkl
+        - pkl: evaluationdetails_20250703.pkl
             - Details of evaluations
     Notes
         - Using the Evaluation Registry search function without a search term results
@@ -63,11 +63,26 @@ while next_page:
     # Restrict to links starking with "/search/"
     card_urls = [url for url in card_urls if re.match(r"^/search/", url["href"])]
 
+    page_urls = []
+
+    # Extract URLs and titles from the card URLs
     for url in card_urls:
         if "href" in url.attrs:
+            print(url.text.strip(), url.attrs["href"])
+            page_urls.append(url.attrs["href"])
             urlList.append(url.attrs["href"])
 
-    if soup.find("div", {"class": "govuk-pagination__next"}):
+    # Check that there are exactly 25 URLs per page (except possibly the last page)
+    has_next_page = soup.find("div", {"class": "govuk-pagination__next"}) is not None
+
+    if has_next_page and len(page_urls) != 25:
+        print(f"Warning: Page {page} has {len(page_urls)} URLs, expected 25")
+    elif not has_next_page and len(page_urls) > 25:
+        print(f"Warning: Last page {page} has {len(page_urls)} URLs, expected 25 or fewer")
+
+    print(f"Page {page}: {len(page_urls)} URLs found")
+
+    if has_next_page:
         next_page = True
     else:
         next_page = False
@@ -77,7 +92,7 @@ print(datetime.datetime.now())
 
 # Save URLs to pickle
 urlList = list(set(urlList))
-pd.DataFrame(urlList).to_pickle("urls_20250701.pkl")
+pd.DataFrame(urlList).to_pickle("urls_20250703.pkl")
 
 
 # %%
@@ -133,7 +148,7 @@ display(df_details)
 
 # %%
 # SAVE TO PICKLE
-df_details.to_pickle("evaluationdetails_20250701.pkl")
+df_details.to_pickle("evaluationdetails_20250703.pkl")
 
 # %%
 # Drop "Page not found" rows
